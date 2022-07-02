@@ -1,3 +1,5 @@
+// Rename this file : 'App.js' if you want to use without server
+
 import { useState } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'

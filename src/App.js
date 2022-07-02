@@ -1,11 +1,12 @@
+import { useState } from 'react'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
-import { useState } from 'react'
+import AddTask from './components/AddTask'
 
 
 function App() {
   const name = "Brad"
-  // const x = true
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
     {
         id: 1,
@@ -27,12 +28,18 @@ function App() {
     }
 
 ])
+  // Add Task
+  const addTask = (task) => {
+    const id = tasks.length + 1;
+    const newTask = {id, ...task}
+    setTasks([...tasks, newTask])
+  }
   // Delete Task
   const deleteTask = (id) => {
     // console.log('delete', id)
     setTasks(tasks.filter((task) => task.id !== id))  // Delete the task thanks to its own ID.
   }
-  
+
   // Toggle Reminder
   const toggleReminder = (id) => {
     setTasks(
@@ -49,7 +56,13 @@ function App() {
 
     // With components
     <div className="container">
-      <Header title={name}/>
+      <Header
+        title={name} 
+        onAdd={() => setShowAddTask(!showAddTask)}
+        showAdd={showAddTask}
+      />
+      {showAddTask && <AddTask onAdd={addTask} />}  
+      {/* && = if without else statement */}
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleReminder}/> : 'No tasks there.'}
     </div>
   )
